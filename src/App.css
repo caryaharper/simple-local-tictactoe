@@ -1,11 +1,16 @@
 .container {
   width: 100%;
   height: 100vh;
+  display: flex;
+}
+
+.tic-tac-toe-header {
+  text-align: center;
 }
 
 .option-container {
   width: 100%;
-  height: 25vh;
+  height: 25%;
   display: flex;
   justify-content: center;
 }
@@ -23,6 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
