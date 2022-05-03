@@ -2,40 +2,34 @@ import '../App.css';
 import Square from './Square';
 import boardMatrixTemplate from './helper-functions/boardMatrixTemplate';
 import checkForWinner from './helper-functions/checkForWinner';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function Board () {
     const [shape, setShape] = useState('X');
-    const [board, setBoard] = useState(boardMatrixTemplate());
     const [hasWon, setHasWon] = useState(false);
 
-    const updateBoard = ([i, j]) => {
-        setBoard(board => {
-            board[i][j] = shape;
+    const board = useRef(boardMatrixTemplate());
 
-            if (checkForWinner(board, shape)) {
+    const updateBoard = ([i, j]) => {
+            board.current[i][j] = shape;
+
+            if (checkForWinner(board.current, shape)) {
                 console.log('winner')
                 setHasWon(true);
             }
-
-            return board;
-        })
     }
 
 
     console.log('render');
     return (
         <div className="board-container">
+            <h1 className='tic-tac-toe-header'>Title</h1>
             <div className="board">
-                <Square shape={shape} position={[0, 0]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[0, 1]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[0, 2]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[1, 0]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[1, 1]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[1, 2]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[2, 0]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[2, 1]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
-                <Square shape={shape} position={[2, 2]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape}/>
+                {Array.from({ length: 9 }, (_, i) => {
+                    const row = Math.floor(i / 3);
+                    const col = i % 3;
+                    return <Square key={i} shape={shape} position={[row, col]} updateBoard={updateBoard} hasWon={hasWon} updateShape={setShape} />;
+                })}
             </div>
         </div>
     )

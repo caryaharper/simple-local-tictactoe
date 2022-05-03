@@ -11,7 +11,7 @@ export default function Square ({ shape, position, updateBoard, hasWon, updateSh
             return;
         }
         setText(shape);
-        updateShape(shape === 'X' ? 'O' : 'X')
+        updateShape(shape === 'X' ? 'O' : 'X');
         updateBoard(position);
     }
 
